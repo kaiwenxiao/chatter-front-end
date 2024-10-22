@@ -4,12 +4,15 @@ import { PropsWithChildren, useState } from "react";
 interface AuthProps {
   submitLabel: string;
   onSubmit: (credentials: { email: string; password: string }) => Promise<void>;
+  children: React.ReactNode;
+  error?: string;
 }
 
 const Auth = ({
   submitLabel,
   onSubmit,
   children,
+  error,
 }: PropsWithChildren<AuthProps>) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +35,8 @@ const Auth = ({
         label="Email"
         variant="outlined"
         value={email}
+        error={!!error}
+        helperText={error}
         onChange={(event) => setEmail(event.target.value)}
       />
       <TextField
@@ -39,6 +44,8 @@ const Auth = ({
         label="Password"
         variant="outlined"
         value={password}
+        error={!!error}
+        helperText={error}
         onChange={(event) => setPassword(event.target.value)}
       />
       <Button variant="contained" onClick={() => onSubmit({ email, password })}>
