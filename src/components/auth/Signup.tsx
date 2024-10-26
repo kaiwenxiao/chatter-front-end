@@ -5,6 +5,7 @@ import { useCreateUser } from "../../hook/useCreateUser.ts";
 import { useState } from "react";
 import { extractErrorMessage } from "../../utils/errors.ts";
 import { useLogin } from "../../hook/useLogin.ts";
+import { UNKNOWN_ERROR_MESSAGE } from "../../constants/errors.ts";
 
 const Signup = () => {
   const [createUser] = useCreateUser();
@@ -30,7 +31,7 @@ const Signup = () => {
         } catch (err) {
           const errorMessage = extractErrorMessage(err);
           if (errorMessage) return setError(errorMessage);
-          setError("Unknown error occurred");
+          setError(UNKNOWN_ERROR_MESSAGE);
         }
       }}
     >
