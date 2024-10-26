@@ -1,5 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { useGetMe } from "../../hook/useGetMe.ts";
+import { useNavigate } from "react-router-dom";
 
 interface AuthProps {
   submitLabel: string;
@@ -16,6 +18,18 @@ const Auth = ({
 }: PropsWithChildren<AuthProps>) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // after login we call `await client.refetchQueries({ include: "active" });`,
+  // `useGetMe` in Auth component run before login component will be outdated
+  // so it's necessarily to call `useGetMe` again when you need to do something with this query
+  const { data } = useGetMe();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data) {
+      navigate("/");
+    }
+  }, [data]);
 
   return (
     <Stack
