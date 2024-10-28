@@ -48,3 +48,11 @@ export default tseslint.config({
   },
 })
 ```
+
+yarn graphql-code-generator init
+
+unable in vite
+"dev": "concurrently \"vite\", \"npm run codegen --watch\"",
+
+so we need `npm run dev` and `npm run codegen` to start project
+`npm run codegen`'s `--watch` is optional (need to install `@parcel/watcher`)
