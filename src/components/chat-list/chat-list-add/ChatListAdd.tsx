@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/search";
 import { useCreateChat } from "../../../hook/useCreateChat.ts";
 import { UNKNOWN_ERROR_MESSAGE } from "../../../constants/errors.ts";
+import router from "../../Routes.tsx";
 
 interface ChatListAddProps {
   open: boolean;
@@ -31,7 +32,7 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
   const onClose = () => {
     setError("");
     setName("");
-    setIsPrivate("");
+    setIsPrivate(false);
     handleClose();
   };
 
@@ -84,13 +85,13 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
           )}
           <Button
             variant="outlined"
-            onClick={() => {
+            onClick={async () => {
               if (!name.length) {
                 setError("Chat name is required.");
                 return;
               }
               try {
-                createChat({
+                const chat = await createChat({
                   variables: {
                     createChatInput: {
                       isPrivate,
@@ -99,6 +100,7 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
                   },
                 });
                 onClose();
+                router.navigate(`/chats/${chat.data?.createChat._id}`);
               } catch (err) {
                 setError(UNKNOWN_ERROR_MESSAGE);
               }
