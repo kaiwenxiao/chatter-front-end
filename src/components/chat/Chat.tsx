@@ -15,7 +15,6 @@ import { useEffect, useRef, useState } from "react";
 import { useGetMessages } from "../../hook/useGetMessages.ts";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-import { useMessageCreated } from "../../hook/useMessageCreated.ts";
 
 const Chat = () => {
   const params = useParams();
@@ -26,7 +25,6 @@ const Chat = () => {
   const { data: messages } = useGetMessages({ chatId });
   const divRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
-  useMessageCreated({ chatId });
 
   const scrollToBottom = () => divRef.current?.scrollIntoView();
 
