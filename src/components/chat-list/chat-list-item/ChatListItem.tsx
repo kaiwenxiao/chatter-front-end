@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import { ListItemButton } from "@mui/material";
 import router from "../../Routes.tsx";
 import { Chat } from "../../../gql/graphql.ts";
+import "./ChatListItem.module.css";
+import Box from "@mui/material/Box";
 
 interface ChatListProps {
   chat: Chat;
@@ -27,7 +29,13 @@ const ChatListItem = ({ chat, selected }: ChatListProps) => {
           <ListItemText
             primary={chat.name}
             secondary={
-              <>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.5rem",
+                }}
+              >
                 <Typography
                   sx={{ display: "inline" }}
                   component="span"
@@ -36,8 +44,10 @@ const ChatListItem = ({ chat, selected }: ChatListProps) => {
                 >
                   {chat.latestMessage?.user.username || ""}
                 </Typography>
-                {" " + (chat.latestMessage?.content || "")}
-              </>
+                <div className="content">
+                  {" " + (chat.latestMessage?.content || "")}
+                </div>
+              </Box>
             }
           />
         </ListItemButton>

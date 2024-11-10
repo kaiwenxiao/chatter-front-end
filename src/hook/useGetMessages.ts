@@ -3,8 +3,8 @@ import { useQuery } from "@apollo/client";
 import { MessagesQueryVariables } from "../gql/graphql.ts";
 
 export const getMessagesDocument = graphql(`
-  query Messages($chatId: String!) {
-    messages(chatId: $chatId) {
+  query Messages($chatId: String!, $skip: Int!, $limit: Int!) {
+    messages(chatId: $chatId, skip: $skip, limit: $limit) {
       ...MessageFragment
     }
   }
