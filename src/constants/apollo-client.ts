@@ -40,7 +40,26 @@ const splitLink = split(
 );
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          chats: {
+            // when react-infinite-scroll loading data, we need merge the existing data and incoming data
+            // only one chats query in our system
+            keyArgs: false,
+            merge(existing, incoming, { args }: any) {
+              const merged = existing ? existing.slice(0) : [];
+              for (let i = 0; i < incoming.length; ++i) {
+                merged[args.skip + i] = incoming[i];
+              }
+              return merged;
+            },
+          },
+        },
+      },
+    },
+  }),
   // uri: `${API_URL}/graphql`,
   // TODO
   link: logoutLink.concat(splitLink),
