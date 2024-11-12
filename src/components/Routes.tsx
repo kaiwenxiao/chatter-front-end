@@ -3,6 +3,7 @@ import Login from "./auth/Login.tsx";
 import Signup from "./auth/Signup.tsx";
 import { Home } from "@mui/icons-material";
 import Chat from "./chat/Chat.tsx";
+import { Profile } from "./profile/Profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/chats/:_id",
     element: <Chat />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 

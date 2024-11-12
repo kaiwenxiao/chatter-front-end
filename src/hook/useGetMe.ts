@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { User } from "../models/User.ts";
 import { graphql } from "../gql";
 
 // refer to useCreateUser
@@ -17,10 +16,11 @@ const getMeDocument = graphql(`
     me {
       _id
       email
+      username
     }
   }
 `);
 
 export const useGetMe = () => {
-  return useQuery<{ me: User }>(getMeDocument);
+  return useQuery(getMeDocument);
 };
